@@ -67,11 +67,11 @@
 # 분석/설계
 
 ## Event Storming 결과
-* MSAEz 로 모델링한 이벤트스토밍 결과:  http://www.msaez.io/#/storming/8PeWNorN2DZmr9eaKXl5ZKjKrJJ3/share/e97a1124efe99dc1edb15f8453d6a125/-MLBdLSL1aMfQCoHSb7u
+* MSAEz 로 모델링한 이벤트스토밍 결과:  http://www.msaez.io/#/storming/KSKHV4EtiSQJSB4QtRsajLCyJBk1/mine/188df595584bfd3d5eb8a367d7153b71/-MLLwL6U8CVw-dAa34gq
 
 
 ### 이벤트 도출
-![image](https://user-images.githubusercontent.com/20619166/98074092-0c54ed80-1ead-11eb-8801-cea6c8e76cf7.png)
+![image](https://user-images.githubusercontent.com/65577551/98215524-3e3c8180-1f8b-11eb-8ff3-445637766e3f.png)
 
     - 도메인 서열 분리 
         - Core Domain:  Order : bookmarket 핵심 서비스이며, 연간 Up-time SLA 수준을 99.999% 목표, 배포 주기는 Order 의 경우 1주일 1회 미만
