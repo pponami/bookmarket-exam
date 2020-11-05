@@ -423,15 +423,16 @@ Approval 서버스의 apllication.yml에 deployment에 추가된 값을 참조�
 
 
 configmap.yml 파일의 url을 임의의 값으로 변경 하여 재 배포한 Approval 서비스의 호출을 확인한다.
+
 변경전 Approval 서비스는 정상 동작한다.
 
 ![image](https://user-images.githubusercontent.com/65577551/98292788-a2ddf780-1ff0-11eb-983c-05941e333b10.png)
 
 
 data:
+
   url:  http://Approval:8088
+
 로 변경한 후 재 배포후 실행 한 결과 다음과 같이 실패하였다.
 
 ![image](https://user-images.githubusercontent.com/65577551/98293202-44654900-1ff1-11eb-860d-596795d8e4f0.png)
-
-root@labs--2023481703:~/src/bookmarket# http http://order:8080/orders bookId=101 qty=1 customerId=10002
