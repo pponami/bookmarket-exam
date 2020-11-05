@@ -261,9 +261,9 @@ http POST http://localhost:8085/regRequests bookId=98 bookNm=Yourbook publId=200
 ## 비동기식 호출 / 시간적 디커플링 / 장애격리 / 최종 (Eventual) 일관성 테스트
 
 
-결제가 이루어진 후에 배송서비스로 이를 알려주는 행위는 동기식이 아니라 비 동기식으로 처리하여 배송서비스의 처리를 위하여 결제주문이 블로킹 되지 않도록 처리한다.
+등록요청 취소가 이루어진 후에 승인 서비스로의 알림은 동기식이 아니라 비 동기식으로 처리하여 승인취소 서비스를 위하여 등록취소 요청이 블로킹 되지 않도록 처리한다.
  
-- 이를 위하여 결제이력에 기록을 남긴 후에 곧바로 결제승인이 되었다는 도메인 이벤트를 카프카로 송출한다(Publish)
+- 이를 위하여 등록요청 상태에 값(Y/N)을 남긴 후에 곧바로 취소요청이 되었다는 도메인 이벤트를 카프카로 송출한다(Publish)
  
 ```
 package bookmarket;
@@ -273,21 +273,27 @@ import org.springframework.beans.BeanUtils;
 import java.util.List;
 
 @Entity
-@Table(name="Payment_table")
-public class Payment {
+@Table(name="RegRequest_table")
+public class RegRequest {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
-    private Long orderId;
-    private String status;
-    private Long customerId;
+    private Long bookId;
+    private String bookNm;
+    private String regYn;
+    private Long publId;
 
     @PostPersist
-    public void onPostPersist(){
-        Paid paid = new Paid();
-        BeanUtils.copyProperties(this, paid);
-        paid.publishAfterCommit();
+    //중략
+    
+    @PreRemove
+    public void onPreRemove(){
+        ReqCanceled reqCanceled = new ReqCanceled();
+        BeanUtils.copyProperties(this, reqCanceled);
+        reqCanceled.setRegYn("ReqCanceled");
+        reqCanceled.publishAfterCommit();
+
     }
 ```
 - 배송 서비스에서는 결제승인 이벤트에 대해서 이를 수신하여 자신의 정책을 처리하도록 PolicyHandler 를 구현한다:
