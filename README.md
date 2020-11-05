@@ -202,48 +202,16 @@ Delivery 서비스에는 H2 DB 대신 HSQLDB를 사용하기로 하였다. 이�
 
 ## 동기식 호출 과 Fallback 처리
 
-분석단계에서의 조건 중 하나로 주문(Order)->결제(Payment) 간의 호출은 동기식 일관성을 유지하는 트랜잭션으로 처리하기로 하였다. 
+분석단계에서의 조건 중 하나로 등록요청(RegRequest)->승인(Approve) 간의 호출은 동기식 일관성을 유지하는 트랜잭션으로 처리하기로 하였다. 
 호출 프로토콜은 이미 앞서 Rest Repository 에 의해 노출되어 있는 REST 서비스를 FeignClient 를 이용하여 호출하도록 한다. 
 
 - 결제서비스를 호출하기 위하여 FeignClient 를 이용하여 Service 대행 인터페이스 (Proxy) 를 구현 
 
-```
-# (Order) PaymentService.java
+![image](https://user-images.githubusercontent.com/65577551/98229925-e2c7bf00-1f9d-11eb-854a-ff2913852116.png)
 
+- 등록요청을 받은 직후(@PostPersist) 승인을 요청하도록 처리
 
-package bookmarket.external;
-
-import java.util.Date;
-
-@FeignClient(name="Payment", url="${api.payment.url}")
-public interface PaymentService {
-
-    @RequestMapping(method= RequestMethod.POST, path="/payments")
-    public void payReq(@RequestBody Payment payment);
-
-}
-```
-
-- 주문을 받은 직후(@PostPersist) 결제를 요청하도록 처리
-```
-# Order.java (Entity)
-
-    @PostPersist
-    public void onPostPersist(){
-        Ordered ordered = new Ordered();
-        BeanUtils.copyProperties(this, ordered);
-        ordered.setStatus("Ordered");
-        ordered.publishAfterCommit();
-
-        bookmarket.external.Payment payment = new bookmarket.external.Payment();
-        payment.setOrderId(this.getId());
-        payment.setStatus("Ordered");
-        payment.setCustomerId(this.getCustomerId());
-        // mappings goes here
-        OrderApplication.applicationContext.getBean(bookmarket.external.PaymentService.class)
-            .payReq(payment);
-    }
-```
+![image](https://user-images.githubusercontent.com/65577551/98229934-e5c2af80-1f9d-11eb-9a4b-7d65fc64b664.png)
 
 - 동기식 호출에서는 호출 시간에 따른 타임 커플링이 발생하며, 결제 시스템이 장애가 나면 주문도 못받는다는 것을 확인 (비기능 요구사항 1):
 
