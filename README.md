@@ -422,7 +422,6 @@ Approval 서버스의 apllication.yml에 deployment에 추가된 값을 참조�
 ![image](https://user-images.githubusercontent.com/65577551/98291020-d0757180-1fed-11eb-8434-565e8a91bcf5.png)
 
 
-```
 configmap.yml 파일의 url을 임의의 값으로 변경 하여 재 배포한 Approval 서비스의 호출을 확인한다.
 변경전 Approval 서비스는 정상 동작한다.
 
@@ -436,4 +435,3 @@ data:
 ![image](https://user-images.githubusercontent.com/65577551/98293202-44654900-1ff1-11eb-860d-596795d8e4f0.png)
 
 root@labs--2023481703:~/src/bookmarket# http http://order:8080/orders bookId=101 qty=1 customerId=10002
-```
