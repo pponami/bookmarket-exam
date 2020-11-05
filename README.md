@@ -89,7 +89,7 @@
 # 구현:
 
 분석/설계 단계에서 도출된 헥사고날 아키텍처에 따라, 각 Bounded Context 별로 대변되는 마이크로 서비스들을 Spring Boot 로 구현하였다. 
-구현한 각 서비스를 로컬에서 실행하는 방법은 아래와 같다. (포트 넘버는 8081 ~ 8084 이다)
+구현한 각 서비스를 로컬에서 실행하는 방법은 아래와 같다. (포트 넘버는 8085 ~ 8087 이다)
 
 ```
 cd RegRequest
@@ -196,13 +196,13 @@ public interface OrderRepository extends PagingAndSortingRepository<Order, Long>
 ```
 - 적용 후 REST API 의 테스트
 ```
-# RegRequest 서비스의 등록요청처리
+# RegRequest 서비스통한 출판사의 신간 등록요청처리
 http localhost:8081/orders bookId=10 qty=20 customerId=1001
 ```
 ![image](https://user-images.githubusercontent.com/70673830/98118621-dafd1180-1eee-11eb-9899-768519ae80cc.png)
 
 ```
-# RegRequest 서비스의 등록요청상태 확인
+# RegRequest 서비스의 신간 등록요청상태 확인
 http localhost:8081/orders/1
 ```
 ![image](https://user-images.githubusercontent.com/70673830/98118737-fff18480-1eee-11eb-92a7-3075aece0ec1.png)
