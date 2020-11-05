@@ -402,61 +402,38 @@ kubectl get deploy payment -w
 
 ## Config Map
 ```
-Order 서비스에 configmap.yml 파일을 생성한다.
+Approval 서비스에 configmap.yml 파일을 생성한다.
+```
 
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: apipayurl
-data:
-  url:  http://payment:8080
-```
-```
-Order 서버스의 deployment.yml에 configmap 파일을 참조할 수 있는 값을 추가한다.
+![image](https://user-images.githubusercontent.com/65577551/98290989-c784a000-1fed-11eb-8812-d9ff79b3117d.png)
 
-          env:
-            - name: payurl
-              valueFrom:
-                configMapKeyRef:
-                  name: apipayurl
-                  key: url
-```
-```
-Order 서버스의 apllication.yml에 deployment에 추가된 값을 참조하도록 추가한다.
 
-api:
-  payment:
-    url: ${payurl}
 ```
+Approva 서버스의 deployment.yml에 configmap 파일을 참조할 수 있는 값을 추가한다.
 ```
-Order 서버스의 PaymentService.java에 외부 값을 보도록 변경한다.
 
-@FeignClient(name="Payment", url="${api.payment.url}")
-public interface PaymentService {
+![image](https://user-images.githubusercontent.com/65577551/98291005-cc495400-1fed-11eb-81ea-cb499d97aab3.png)
 
-    @RequestMapping(method= RequestMethod.POST, path="/payments")
-    public void payReq(@RequestBody Payment payment);
 
-}
 ```
+Approval 서버스의 apllication.yml에 deployment에 추가된 값을 참조하도록 추가한다.
 ```
-configmap.yml 파일의 url을 임의의 값으로 변경 후 order 서비스의 호출을 확인한다.
+
+![image](https://user-images.githubusercontent.com/65577551/98291020-d0757180-1fed-11eb-8434-565e8a91bcf5.png)
+
+
+```
+configmap.yml 파일의 url을 임의의 값으로 변경 하여 재 배포한 Approval 서비스의 호출을 확인한다.
+변경전 Approval 서비스는 정상 동작한다.
+
+![image](https://user-images.githubusercontent.com/65577551/98292788-a2ddf780-1ff0-11eb-983c-05941e333b10.png)
+
 
 data:
-  url:  http://payment:8088
+  url:  http://Approval:8088
+로 변경한 후 재 배포후 실행 한 결과 다음과 같이 실패하였다.
+
+![image](https://user-images.githubusercontent.com/65577551/98293202-44654900-1ff1-11eb-860d-596795d8e4f0.png)
 
 root@labs--2023481703:~/src/bookmarket# http http://order:8080/orders bookId=101 qty=1 customerId=10002
-HTTP/1.1 500 Internal Server Error
-Content-Type: application/json;charset=UTF-8
-Date: Wed, 04 Nov 2020 16:17:34 GMT
-transfer-encoding: chunked
-
-{
-    "error": "Internal Server Error", 
-    "message": "Could not commit JPA transaction; nested exception is javax.persistence.RollbackException: Error while committing the transaction", 
-    "path": "/orders", 
-    "status": 500, 
-    "timestamp": "2020-11-04T16:17:34.521+0000"
-}
-
 ```
