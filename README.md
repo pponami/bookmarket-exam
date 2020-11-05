@@ -351,6 +351,7 @@ CI/CD 설정을 위해 아래와 같은 선행작업을 진행하였다
 
 <이미지 배포 및 서비스 생성>
 
+![image](https://user-images.githubusercontent.com/65577551/98269161-c7c27280-1fd0-11eb-8d77-55e19406c3c5.png)
 
 
 
