@@ -296,46 +296,8 @@ public class RegRequest {
 
     }
 ```
-- 배송 서비스에서는 결제승인 이벤트에 대해서 이를 수신하여 자신의 정책을 처리하도록 PolicyHandler 를 구현한다:
 
-```
-package bookmarket;
-
-import bookmarket.config.kafka.KafkaProcessor;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.stream.annotation.StreamListener;
-import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-
-@Service
-public class PolicyHandler{
-    @StreamListener(KafkaProcessor.INPUT)
-    public void onStringEventListener(@Payload String eventString){
-
-    }
-
-    @Autowired
-    DeliveryRepository deliveryRepository;
-
-    @StreamListener(KafkaProcessor.INPUT)
-    public void wheneverPaid_Ship(@Payload Paid paid){
-
-        if(paid.isMe()){
-            System.out.println("##### listener Ship : " + paid.toJson());
-            Delivery delivery = new Delivery();
-            delivery.setOrderId(paid.getOrderId());
-            delivery.setCustomerId(paid.getCustomerId());
-            delivery.setStatus("Shipped");
-
-            deliveryRepository.save(delivery);
-        }
-    }
-
-승인서비스가 내려간 후에도 등록요청 서비스는 '등록요청취소' 상태를 해당 요청 건에 상태 변경을 할 수 있다.
+승인서비스가 내려간 후에도 등록요청 서비스는 해당 요청 건의 '등록요청취소'를 처리할 수 있다: 등록상태 변경
 
 # 승인서비스를 내리기 전에는 정상적으로 승인삭제/요청취소가 된다
 ![image](https://user-images.githubusercontent.com/65577551/98244603-09dcbb80-1fb3-11eb-9bfb-7ddd5e0567ab.png)
