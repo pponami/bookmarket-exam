@@ -358,10 +358,10 @@ CI/CD 설정을 위해 아래와 같은 선행작업을 진행하였다
 각 구현체들은 각자의 source repository 에 구성되었고, Azure Pipelines 으로 CI/CD 를 구성하였으며, 구성은 아래와 같다. 
 Github 소스 변경이 감지되면, CI 후 trigger 에 의해 CD까지 자동으로 이루어진다.
 
-- CI 
+### CI 
 ![image](https://user-images.githubusercontent.com/70673849/98183815-53de8680-1f4c-11eb-913b-e84d48db0e74.png)
 
-- CD
+### CD
 ![image](https://user-images.githubusercontent.com/70673849/98183996-af107900-1f4c-11eb-98c2-a3bd4c1b69e6.png)
 
 ## Circuit Breaker 점검
