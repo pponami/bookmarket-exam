@@ -335,32 +335,20 @@ public class PolicyHandler{
         }
     }
 
-배송서비스는 주문/결제와 완전히 분리되어있으며, 이벤트 수신에 따라 처리되기 때문에, 배송 서비스가 유지보수로 인해 
-잠시 내려간 상태라도 주문을 받는데 문제가 없다:
+승인서비스가 내려간 후에도 등록요청 서비스는 '등록요청취소' 상태를 해당 요청 건에 상태 변경을 할 수 있다.
 
-# 배송서비스 (Delivery) 를 잠시 내려놓음 (ctrl+c)
+# 승인서비스를 내리기 전에는 정상적으로 승인삭제/요청취소가 된다
+![image](https://user-images.githubusercontent.com/65577551/98244603-09dcbb80-1fb3-11eb-9bfb-7ddd5e0567ab.png)
 
-# 주문처리
-http localhost:8081/orders bookId=2 qty=1 customerId=1002   #Success
-```
-![image](https://user-images.githubusercontent.com/70673830/98119447-f7e61480-1eef-11eb-958b-4faf1dee47b1.png)
-```
-# 주문상태 확인
-http localhost:8081/orders     # 주문상태 안바뀜 확인
-```
-![image](https://user-images.githubusercontent.com/70673830/98119540-121ff280-1ef0-11eb-93fc-5982582757c2.png)
+# 승인서비스(Approval) 를 내리고(stop) 등록취소 시 오류발생
+![image](https://user-images.githubusercontent.com/65577551/98245163-dbabab80-1fb3-11eb-8d7b-3f166b774e03.png)
 
-```
-# 배송 서비스 기동
-cd Delivery
-mvn spring-boot:run
+# 승인서비스(Approval) 를 다시 올리고(Rerun) Approval 조회 시 해당 승인건 삭제 안됨 확인
+  (spring-boot Rerun으로 메모리 초기화 되어 증적 캡쳐못함)
 
-# 주문상태 확인
-http localhost:8081/orders     
+# 승인서비스가 내려가서 승인 건 삭제는 안되었지만 RegRequest에서 등록요청 취소됨을 확인
+![image](https://user-images.githubusercontent.com/65577551/98244937-8cfe1180-1fb3-11eb-8233-d5a01740d940.png)
 
-# 주문의 상태가 "shipped"으로 확인
-```
-![image](https://user-images.githubusercontent.com/70673830/98119616-3380de80-1ef0-11eb-8760-64d746230321.png)
 
 ## CQRS
 pubview(publpages)를 통해 구현하였다: 출판사가 등록요청 상태를 확인하는 뷰
