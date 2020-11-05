@@ -299,16 +299,16 @@ public class RegRequest {
 
 승인서비스가 내려간 후에도 등록요청 서비스는 해당 요청 건의 '등록요청취소'를 처리할 수 있다: 등록상태 변경
 
-# 승인서비스를 내리기 전에는 정상적으로 승인삭제/요청취소가 된다
+## 승인서비스를 내리기 전에는 정상적으로 승인삭제/요청취소가 된다
 ![image](https://user-images.githubusercontent.com/65577551/98244603-09dcbb80-1fb3-11eb-9bfb-7ddd5e0567ab.png)
 
-# 승인서비스(Approval) 를 내리고(stop) 등록취소 시 오류발생
+## 승인서비스(Approval) 를 내리고(stop) 등록취소 시 오류발생
 ![image](https://user-images.githubusercontent.com/65577551/98245163-dbabab80-1fb3-11eb-8d7b-3f166b774e03.png)
 
-# 승인서비스(Approval) 를 다시 올리고(Rerun) Approval 조회 시 해당 승인건 삭제 안됨 확인
+## 승인서비스(Approval) 를 다시 올리고(Rerun) Approval 조회 시 해당 승인건 삭제 안됨 확인
   (spring-boot Rerun으로 메모리 초기화 되어 증적 캡쳐못함)
 
-# 승인서비스가 내려가서 승인 건 삭제는 안되었지만 RegRequest에서 등록요청 취소됨을 확인
+## 승인서비스가 내려가서 승인 건 삭제는 안되었지만 RegRequest에서 등록요청 취소됨을 확인
 ![image](https://user-images.githubusercontent.com/65577551/98244937-8cfe1180-1fb3-11eb-8233-d5a01740d940.png)
 
 
