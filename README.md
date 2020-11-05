@@ -197,26 +197,24 @@ public interface OrderRepository extends PagingAndSortingRepository<Order, Long>
 - 적용 후 REST API 의 테스트
 ```
 # RegRequest 서비스통한 출판사의 신간 등록요청처리
-http localhost:8081/orders bookId=10 qty=20 customerId=1001
+http POST http://localhost:8085/regRequests bookId=99 bookNm=mybook publId=100
+
 ```
-![image](https://user-images.githubusercontent.com/70673830/98118621-dafd1180-1eee-11eb-9899-768519ae80cc.png)
+![image](https://user-images.githubusercontent.com/65577551/98238540-db0e1780-1fa9-11eb-9cd0-7987464d76df.png)
 
 ```
 # RegRequest 서비스의 신간 등록요청상태 확인
-http localhost:8081/orders/1
+http GET http://localhost:8085/regRequests/1
 ```
-![image](https://user-images.githubusercontent.com/70673830/98118737-fff18480-1eee-11eb-92a7-3075aece0ec1.png)
+![image](https://user-images.githubusercontent.com/65577551/98238898-6edfe380-1faa-11eb-8e0d-10782ca7436f.png)
 
 
 ## 폴리글랏 퍼시스턴스
 
 Approval 서비스에는 H2 DB 대신 HSQLDB를 사용하기로 하였다. 이를 위해 Approval 메이븐 설정(pom.xml)상 DB 정보를 HSQLDB를 사용하도록 변경하였다.
 
-![image](https://user-images.githubusercontent.com/20619166/98075211-4fb05b80-1eaf-11eb-9219-d848180c21bd.png)
-
-![image](https://user-images.githubusercontent.com/20619166/98075210-4f17c500-1eaf-11eb-92d1-3d3731bc4e0c.png)
-
-![image](https://user-images.githubusercontent.com/70673830/98119038-68406600-1eef-11eb-803e-a234638ac717.png)
+![image](https://user-images.githubusercontent.com/65577551/98238961-8dde7580-1faa-11eb-902a-6b184ca74ca2.png)
+![image](https://user-images.githubusercontent.com/65577551/98239114-cda55d00-1faa-11eb-892c-c9ad000cfa45.png)
 
 
 ## 동기식 호출 과 Fallback 처리
