@@ -341,7 +341,18 @@ CI/CD 설정을 위해 아래와 같은 선행작업을 진행하였다
 - Dockerizing
 
 <패키징>
+
 ![image](https://user-images.githubusercontent.com/65577551/98255440-c2f5c280-1fc0-11eb-93b0-2be4c2386939.png)
+
+<이미지 생성>
+
+![image](https://user-images.githubusercontent.com/65577551/98258841-b2474b80-1fc4-11eb-9f58-50f5fa34834a.png)
+
+
+<이미지 배포 및 서비스 생성>
+
+
+
 
 각 구현체들은 각자의 source repository 에 구성되었고, Azure Pipelines 으로 CI/CD 를 구성하였으며, 구성은 아래와 같다. 
 Github 소스 변경이 감지되면, CI 후 trigger 에 의해 CD까지 자동으로 이루어진다.
