@@ -92,79 +92,99 @@
 구현한 각 서비스를 로컬에서 실행하는 방법은 아래와 같다. (포트 넘버는 8081 ~ 8084 이다)
 
 ```
-cd Order
+cd RegRequest
 mvn spring-boot:run
 
-cd Payment
+cd Approval
 mvn spring-boot:run 
 
-cd Delivery
+cd pubView
 mvn spring-boot:run  
 
-cd customerview
-mvn spring-boot:run 
 ```
 
 ## DDD 의 적용
 
-- 각 서비스내에 도출된 핵심 Aggregate Root 객체를 Entity 로 선언하였다: (예시는 Order 마이크로 서비스)
+- 각 서비스내에 도출된 핵심 Aggregate Root 객체를 Entity 로 선언하였다: (예시는 RegRequest 마이크로 서비스)
 
 ```
 package bookmarket;
 
 @Entity
-@Table(name="Order_table")
-public class Order {
+@Table(name="RegRequest_table")
+public class RegRequest {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
     private Long bookId;
-    private Long qty;
-    private String status;
-    private Long customerId;
+    private String bookNm;
+    private String regYn;
+    private Long publId;
 
     @PostPersist
     public void onPostPersist(){
-        Ordered ordered = new Ordered();
-        BeanUtils.copyProperties(this, ordered);
-        ordered.setStatus("Ordered");
-        ordered.publishAfterCommit();
+        RegRequested regRequested = new RegRequested();
+        BeanUtils.copyProperties(this, regRequested);
+        regRequested.setRegYn("RegRequested");
+        regRequested.publishAfterCommit();
 
-        //Following code causes dependency to external APIs
-        // it is NOT A GOOD PRACTICE. instead, Event-Policy mapping is recommended.
-
-        bookmarket.external.Payment payment = new bookmarket.external.Payment();
-        payment.setOrderId(this.getId());
-        payment.setStatus("Ordered");
-        payment.setCustomerId(this.getCustomerId());
+        bookmarket.external.Approve approve = new bookmarket.external.Approve();
         // mappings goes here
-        OrderApplication.applicationContext.getBean(bookmarket.external.PaymentService.class)
-            .payReq(payment);
+        approve.setReqReqId(this.getId());
+        approve.setAppYn("RegRequested");
+        approve.setPublId(this.publId);
+        RegrequestApplication.applicationContext.getBean(bookmarket.external.ApproveService.class)
+            .appReq(approve);
     }
 
     @PreRemove
     public void onPreRemove(){
-        OrderCanceled orderCanceled = new OrderCanceled();
-        BeanUtils.copyProperties(this, orderCanceled);
-        orderCanceled.setStatus("OrderCanceled");
-        orderCanceled.publishAfterCommit();
+        ReqCanceled reqCanceled = new ReqCanceled();
+        BeanUtils.copyProperties(this, reqCanceled);
+        reqCanceled.setRegYn("ReqCanceled");
+        reqCanceled.publishAfterCommit();
     }
 
     public Long getId() {
         return id;
     }
 
-    // getter(), setter() 중략
-    
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    public void setId(Long id) {
+        this.id = id;
     }
-}
+    public Long getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(Long bookId) {
+        this.bookId = bookId;
+    }
+    public String getBookNm() {
+        return bookNm;
+    }
+
+    public void setBookNm(String bookNm) {
+        this.bookNm = bookNm;
+    }
+    public String getRegYn() {
+        return regYn;
+    }
+
+    public void setRegYn(String regYn) {
+        this.regYn = regYn;
+    }
+    public Long getPublId() {
+        return publId;
+    }
+
+    public void setPublId(Long publId) {
+        this.publId = publId;
+    }
 
 
 ```
-- Entity / Repository Pattern을 적용하여 JPA를 통하여 다양한 데이터소스 유형 (이 과제에서는 H2, HSQLDB) 에 대한 데이터 접근 어댑터를 자동 생성하기 위하여 
+- Entity / Repository Pattern을 적용하여 JPA를 통하여 다양한 데이터소스 유형 (개별 과제에서는 H2, HSQLDB) 에 대한 데이터 접근 어댑터를 자동 생성하기 위하여 
 Spring Data REST의 RestRepository 를 적용
 ```
 package bookmarket;
@@ -177,13 +197,13 @@ public interface OrderRepository extends PagingAndSortingRepository<Order, Long>
 ```
 - 적용 후 REST API 의 테스트
 ```
-# Order 서비스의 주문처리
+# RegRequest 서비스의 등록요청처리
 http localhost:8081/orders bookId=10 qty=20 customerId=1001
 ```
 ![image](https://user-images.githubusercontent.com/70673830/98118621-dafd1180-1eee-11eb-9899-768519ae80cc.png)
 
 ```
-# Order 서비스의 주문 상태 확인
+# RegRequest 서비스의 등록요청상태 확인
 http localhost:8081/orders/1
 ```
 ![image](https://user-images.githubusercontent.com/70673830/98118737-fff18480-1eee-11eb-92a7-3075aece0ec1.png)
@@ -191,7 +211,7 @@ http localhost:8081/orders/1
 
 ## 폴리글랏 퍼시스턴스
 
-Delivery 서비스에는 H2 DB 대신 HSQLDB를 사용하기로 하였다. 이를 위해 메이븐 설정(pom.xml)상 DB 정보를 HSQLDB를 사용하도록 변경하였다.
+Approval 서비스에는 H2 DB 대신 HSQLDB를 사용하기로 하였다. 이를 위해 Approval 메이븐 설정(pom.xml)상 DB 정보를 HSQLDB를 사용하도록 변경하였다.
 
 ![image](https://user-images.githubusercontent.com/20619166/98075211-4fb05b80-1eaf-11eb-9219-d848180c21bd.png)
 
