@@ -334,6 +334,15 @@ gateway 프로젝트 내 application.yml: 신규 서비스 8085~8087로 등록
 # 운영
 
 ## CI/CD 설정
+CI/CD 설정을 위해 아래와 같은 선행작업을 진행하였다
+- azure login 후 azure 클러스터/컨테이너 레지스트리 설정작업 진행
+![image](https://user-images.githubusercontent.com/65577551/98252443-4b726400-1fbd-11eb-86c4-5b88ae254378.png)
+
+- Dockerizing
+* 패키징
+![image](https://user-images.githubusercontent.com/65577551/98251299-e2d6b780-1fbb-11eb-8820-f9e3fc79671b.png)
+![image](https://user-images.githubusercontent.com/65577551/98251202-c6d31600-1fbb-11eb-8499-ef704f58fc8e.png)
+
 
 각 구현체들은 각자의 source repository 에 구성되었고, Azure Pipelines 으로 CI/CD 를 구성하였으며, 구성은 아래와 같다. 
 Github 소스 변경이 감지되면, CI 후 trigger 에 의해 CD까지 자동으로 이루어진다.
