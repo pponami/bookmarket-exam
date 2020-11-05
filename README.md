@@ -364,12 +364,11 @@ pubview(publpages)를 통해 구현하였다: 출판사가 등록요청 상태�
 
 
 ## gateway
-gateway 프로젝트 내 application.yml
+gateway 프로젝트 내 application.yml: 신규 서비스 8085~8087로 등록
 
 ![image](https://user-images.githubusercontent.com/65577551/98240680-21b14100-1fad-11eb-9573-36e6fc175e11.png)
 
-![image](https://user-images.githubusercontent.com/70673830/98119815-7a6ed400-1ef0-11eb-9576-028614349553.png)
-
+![image](https://user-images.githubusercontent.com/65577551/98241289-13aff000-1fae-11eb-8d17-5a5fb77ac757.png)
 
 
 
