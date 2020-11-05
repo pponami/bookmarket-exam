@@ -357,16 +357,16 @@ http localhost:8081/orders
 ![image](https://user-images.githubusercontent.com/70673830/98119616-3380de80-1ef0-11eb-8760-64d746230321.png)
 
 ## CQRS
-customerview(mypage)를 통해 구현하였다.
+pubview(publpages)를 통해 구현하였다: 출판사가 등록요청 상태를 확인하는 뷰
 
-![image](https://user-images.githubusercontent.com/70673830/98119678-48f60880-1ef0-11eb-955e-a99ef278f2d3.png)
+![image](https://user-images.githubusercontent.com/65577551/98240615-06463600-1fad-11eb-8d82-f1dc3eb5541d.png)
 
 
 
 ## gateway
 gateway 프로젝트 내 application.yml
 
-![image](https://user-images.githubusercontent.com/70673849/98194645-34068d00-1f63-11eb-8440-8d89dfc08ed1.png) ![image](https://user-images.githubusercontent.com/70673849/98194532-f86bc300-1f62-11eb-91aa-666ad18f6d89.png)
+![image](https://user-images.githubusercontent.com/65577551/98240680-21b14100-1fad-11eb-9573-36e6fc175e11.png)
 
 ![image](https://user-images.githubusercontent.com/70673830/98119815-7a6ed400-1ef0-11eb-9576-028614349553.png)
 
