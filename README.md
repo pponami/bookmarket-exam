@@ -61,7 +61,7 @@
 1. 장애격리
 
 1. 성능
-    1. 업체는 심사상태를 시스템에서 확인할 수 있어야 한다 CQRS
+    1. 출판사는 신간 등록요청 승인여부를 시스템에서 확인할 수 있어야 한다 CQRS
 
 
 # 분석/설계
@@ -230,29 +230,28 @@ Approval 서비스에는 H2 DB 대신 HSQLDB를 사용하기로 하였다. 이�
 
 ![image](https://user-images.githubusercontent.com/65577551/98229934-e5c2af80-1f9d-11eb-9a4b-7d65fc64b664.png)
 
-- 동기식 호출에서는 호출 시간에 따른 타임 커플링이 발생하며, 결제 시스템이 장애가 나면 주문도 못받는다는 것을 확인 (비기능 요구사항 1):
+- 동기식 호출에서는 호출 시간에 따른 타임 커플링이 발생하며, 승인 시스템이 장애가 나면 등록요청도 진행된지 않는 것을 확인 (비기능 요구사항 1):
 
 
 ```
-# 결제 (Payment) 서비스를 잠시 내려놓음 (ctrl+c)
+# (심사)승인 (Approval) 서비스를 잠시 내림: stop
 
-# 주문처리
-http localhost:8081/orders bookId=2 qty=1 customerId=1002   #Fail
-
-```
-![image](https://user-images.githubusercontent.com/70673830/98119212-a89fe400-1eef-11eb-8b8e-196a219b0f38.png)
+# 등록요청 처리
+http POST http://localhost:8085/regRequests bookId=98 bookNm=Yourbook publId=200   #Fail
 
 ```
-# 결제서비스 재기동
-cd Payment
-mvn spring-boot:run
+![image](https://user-images.githubusercontent.com/65577551/98239595-88355f80-1fab-11eb-8a15-f0b9ee47b7f0.png)
 
-# 주문처리
-http localhost:8081/orders bookId=1 qty=1 customerId=1001   #Success
-http localhost:8081/orders bookId=2 qty=1 customerId=1002   #Success
+```
+# 승인서비스 재기동
+Approval mvn spring-boot:run
+
+# 등록요청 처리
+http POST http://localhost:8085/regRequests bookId=98 bookNm=Yourbook publId=200   #Success
+
 ```
 
-![image](https://user-images.githubusercontent.com/70673830/98119273-bce3e100-1eef-11eb-9095-5ab722c00185.png)
+![image](https://user-images.githubusercontent.com/65577551/98240138-5375d800-1fac-11eb-8aa6-59f108b80143.png)
 
 - 또한 과도한 요청시에 서비스 장애가 도미노 처럼 벌어질 수 있다. (서킷브레이커, 폴백 처리는 운영단계에서 설명한다.)
 
