@@ -74,13 +74,12 @@
 ![image](https://user-images.githubusercontent.com/65577551/98215524-3e3c8180-1f8b-11eb-8ff3-445637766e3f.png)
 
     - 도메인 서열 분리 
-        - Core Domain:  Order : bookmarket 책등록의 핵심 서비스이며, 연간 Up-time SLA 수준을 99.999% 목표, 배포 주기는 regrequest 의 경우 1주일 1회 미만
-        - Supporting Domain:   Delivery : 경쟁력을 내기 위한 서비스이며, SLA 수준은 연간 60% 이상 uptime 목표, 배포주기는 각 팀의 자율이나 표준 스프린트 주기가 1주일 이므로 1주일 1회 이상을 기준으로 함.
-        - General Domain:   Payment : 결제서비스로 3rd Party 외부 서비스를 사용하는 것이 경쟁력이 높음
+        - Core Domain:  regrequest : bookmarket 책등록의 핵심 서비스이며, 연간 Up-time SLA 수준을 99.999% 목표, 배포 주기는 regrequest 의 경우 1주일 1회 미만
+        - Supporting Domain:   approval : SLA 수준은 연간 60% 이상 uptime 목표, 배포주기는 각 팀의 자율이나 표준 스프린트 주기가 1주일 이므로 1주일 1회 이상을 기준으로 함.
 
 ## 헥사고날 아키텍처 다이어그램 도출
     
-![image](https://user-images.githubusercontent.com/65577551/98219133-f9671980-1f8f-11eb-842d-b55812e52350.png)
+![image](https://user-images.githubusercontent.com/65577551/98219376-41863c00-1f90-11eb-8b11-7db3139b2946.png)
 
     - 이벤트 흐름에서 Inbound adaptor와 Outbound adaptor를 구분함
     - 호출 관계에서 Pub/Sub 과 Req/Resp 를 구분함
