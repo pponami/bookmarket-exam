@@ -130,7 +130,6 @@ public class RegRequest {
         regRequested.publishAfterCommit();
 
         bookmarket.external.Approve approve = new bookmarket.external.Approve();
-        // mappings goes here
         approve.setReqReqId(this.getId());
         approve.setAppYn("RegRequested");
         approve.setPublId(this.publId);
