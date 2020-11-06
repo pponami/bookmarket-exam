@@ -412,6 +412,9 @@ siege -c100 -t120S -r10 -v --content-type "application/json" 'http://40.82.154.9
 - 무정지 재배포가 100% 되는 것인지 확인하기 위해서 Autoscaler 이나 CB 설정을 제거함
 - Seige 실행 중 Readniess 설정을 제거한 경우와 적용된 경우의 Availity 비교
 
+![image](https://user-images.githubusercontent.com/65577551/98337496-09dcca00-204c-11eb-8c7d-55ea41db2537.png)
+
+
 ```
 Readness 제외
 ```
@@ -419,6 +422,9 @@ Readness 제외
 ```
 Readness 적용
 ```
+
+![image](https://user-images.githubusercontent.com/65577551/98337546-1bbe6d00-204c-11eb-80a0-e90b852fc30a.png)
+
 
 ## Liveness Probe 점검
 ```
