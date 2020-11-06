@@ -367,19 +367,6 @@ Github 소스 변경이 감지되면, CI 후 trigger 에 의해 CD까지 자동�
 
 
 ## Circuit Breaker 점검
-### Circuit Breaker
-
-- application.yml과 RegRequest.java 파일 설정
-
-![image](https://user-images.githubusercontent.com/65577551/98327619-4e119f80-2037-11eb-8a90-d9bc6679a5e5.png)
-
-```
-siege -c100 -t120S -r10 -v --content-type "application/json" 'http://40.82.154.98:8080/regrequests POST {"bookId": "10", "bookNm": "mybooks", "regYn": "Y", "publId": "11"}'
-```
-
-![image](https://user-images.githubusercontent.com/65577551/98329006-7fd83580-203a-11eb-9770-56ad737e5fc8.png)
-
-
 
 ### 오토스케일 아웃
 Approval 서비스의 deployment.yml 설정
@@ -404,13 +391,31 @@ kubectl get deploy approval -w -n books
 ![image](https://user-images.githubusercontent.com/65577551/98324603-0fc4b200-2030-11eb-8268-d3e6ef8cbabd.png)
 
 
+### Circuit Breaker
+
+- application.yml과 RegRequest.java 파일 설정
+
+![image](https://user-images.githubusercontent.com/65577551/98327619-4e119f80-2037-11eb-8a90-d9bc6679a5e5.png)
+
+```
+siege -c100 -t120S -r10 -v --content-type "application/json" 'http://40.82.154.98:8080/regrequests POST {"bookId": "10", "bookNm": "mybooks", "regYn": "Y", "publId": "11"}'
+```
+
+![image](https://user-images.githubusercontent.com/65577551/98329006-7fd83580-203a-11eb-9770-56ad737e5fc8.png)
 
 
 ## 무정지 재배포
 
+- 무정지 재배포가 100% 되는 것인지 확인하기 위해서 Autoscaler 이나 CB 설정을 제거함
 - Seige 실행 중 Readniess 설정을 제거한 경우와 적용된 경우의 Availity 비교
 
+```
+Readness 제외
+```
 
+```
+Readness 적용
+```
 
 ## Liveness Probe 점검
 ```
