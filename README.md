@@ -363,7 +363,7 @@ Github 소스 변경이 감지되면, CI 후 trigger 에 의해 CD까지 자동�
 
 
 ### CD
-![image](https://user-images.githubusercontent.com/65577551/98283490-17119e80-1fe3-11eb-9fb4-dbbcf9eea42a.png)
+![image](https://user-images.githubusercontent.com/65577551/98333514-460c2c80-2044-11eb-9ec9-bff2b0fff6a5.png)
 
 
 ## Circuit Breaker 점검
