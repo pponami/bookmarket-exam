@@ -369,7 +369,7 @@ Github 소스 변경이 감지되면, CI 후 trigger 에 의해 CD까지 자동�
 ## Circuit Breaker 점검
 
 ### 오토스케일 아웃
-Approval 서비스의 deployment.yaml 설정
+Approval 서비스의 deployment.yml 설정
 
 ![image](https://user-images.githubusercontent.com/65577551/98314366-26abda00-2019-11eb-819e-48faa3de26cd.png)
 
@@ -394,6 +394,13 @@ kubectl get deploy approval -w -n books
 
 
 ## Liveness Probe 점검
+```
+Approval 서비스의 deployment.yml 의 liveness 설정을 tcpSock:8081로 변경하여 확인  
+
+![image](https://user-images.githubusercontent.com/65577551/98315537-beaac300-201b-11eb-9e78-a6b54ad2688c.png)
+
+
+
 
 
 ## Config Map
