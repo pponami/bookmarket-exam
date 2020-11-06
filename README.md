@@ -367,6 +367,12 @@ Github 소스 변경이 감지되면, CI 후 trigger 에 의해 CD까지 자동�
 
 
 ## Circuit Breaker 점검
+### Circuit Breaker
+
+- application.yml과 RegRequest.java 파일 설정
+
+![image](https://user-images.githubusercontent.com/65577551/98327619-4e119f80-2037-11eb-8a90-d9bc6679a5e5.png)
+
 
 ### 오토스케일 아웃
 Approval 서비스의 deployment.yml 설정
