@@ -376,11 +376,14 @@ Approval 서비스의 deployment.yml 설정
 
 ```
 kubectl autoscale deploy approval --cpu-percent=20 --min=1 --max=10 -n books
+```
 
 ![image](https://user-images.githubusercontent.com/65577551/98324342-52d25580-202f-11eb-9d51-77560f6de1b6.png)
 
 
+```
 siege -c100 -t120S -v --content-type "application/json" 'http://40.82.154.98:8080/approves POST {"reqReqId": "10", "appYN": "Y", "publId":"1002"}'
+```
 
 ```
 - 오토스케일 모니터링
