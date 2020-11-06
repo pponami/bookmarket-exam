@@ -404,10 +404,10 @@ Approval 서비스의 deployment.yml 의 liveness 설정을 tcpSock:8081로 변�
 
 
 ```
-Approval 서비스의 deployment.yml 의 liveness 설정을 tcpSock:8081로 변경하여 확인  
+kubectl describe pod/approval-b5c677548-2kkkl -n books 로 Liveness 확인
 ```
 
-
+![image](https://user-images.githubusercontent.com/65577551/98325765-e8bbaf80-2032-11eb-9e9a-41fb7ebae6af.png)
 
 
 
@@ -420,7 +420,7 @@ Approval 서비스에 configmap.yml 파일을 생성한다.
 
 
 ```
-Approva 서버스의 deployment.yml에 configmap 파일을 참조할 수 있는 값을 추가한다.
+Approval 서버스의 deployment.yml에 configmap 파일을 참조할 수 있는 값을 추가한다.
 ```
 
 ![image](https://user-images.githubusercontent.com/65577551/98291005-cc495400-1fed-11eb-81ea-cb499d97aab3.png)
