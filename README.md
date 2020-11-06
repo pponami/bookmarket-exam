@@ -359,7 +359,7 @@ CI/CD 설정을 위해 아래와 같은 선행작업을 진행하였다
 Github 소스 변경이 감지되면, CI 후 trigger 에 의해 CD까지 자동으로 이루어진다.
 
 ### CI 
-![image](https://user-images.githubusercontent.com/65577551/98276462-59ce7900-1fd9-11eb-95f5-4b74962d1f0a.png)
+![image](https://user-images.githubusercontent.com/65577551/98333428-11987080-2044-11eb-8ce6-4434213e439d.png)
 
 
 ### CD
