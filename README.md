@@ -408,6 +408,9 @@ kubectl get deploy approval -w -n books
 
 ## 무정지 재배포
 
+- Seige 실행 중 Readniess 설정을 제거한 경우와 적용된 경우의 Availity 비교
+
+
 
 ## Liveness Probe 점검
 ```
