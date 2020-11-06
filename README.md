@@ -369,28 +369,24 @@ Github 소스 변경이 감지되면, CI 후 trigger 에 의해 CD까지 자동�
 ## Circuit Breaker 점검
 
 ### 오토스케일 아웃
-Circuite Breaker 는 시스템을 안정되게 운영할 수 있게 해줬지만, 사용자의 요청을 100% 받아들여주지 못했기 때문에 이에 대한 보완책으로 자동화된 확장 기능을 적용하고자 한다. 
+Approval 서비스의 deployment.yaml 설정
 
-- 결제서비스에 대한 replica 를 동적으로 늘려주도록 HPA 를 설정한다. 설정은 CPU 사용량이 20프로를 넘어서면 replica 를 20개까지 늘려준다:
+![image](https://user-images.githubusercontent.com/65577551/98314366-26abda00-2019-11eb-819e-48faa3de26cd.png)
+
+
 ```
-kubectl autoscale deploy payment --cpu-percent=20 --min=1 --max=20 -n books
+kubectl autoscale deploy approval --cpu-percent=20 --min=1 --max=10 -n books
+
+siege -c100 -t120S -v --content-type "application/json" 'http://40.82.154.98:8080/approves POST {"reqReqId": "10", "appYN": "Y", "publId":"1002"}'
+
 ```
-- Circuite Breaker 에서 했던 방식대로 워크로드를 2분 동안 걸어준다.
+- 오토스케일 모니터링
 ```
-siege -c100 -t120S -v --content-type "application/json" 'http://20.196.153.152:8080/orders POST {"bookId": "10", "qty": "1", "customerId":"1002"}'
+kubectl get deploy approval -w -n books
 ```
-- 오토스케일이 어떻게 되고 있는지 모니터링을 걸어둔다:
-```
-kubectl get deploy payment -w
-```
-- 어느 정도 시간이 흐른 후 (약 30초) 스케일 아웃이 벌어지는 것을 확인할 수 있다:
 
 ![image](https://user-images.githubusercontent.com/70673830/98115066-915df800-1ee9-11eb-9ebf-f2d79112bec9.png)
 
-
-- siege 의 로그를 보아도 전체적인 성공률이 높아진 것을 확인 할 수 있다. 
-
-![image](https://user-images.githubusercontent.com/70673830/98115651-7f308980-1eea-11eb-833f-d606aaf6d6d9.png)
 
 
 
