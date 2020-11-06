@@ -399,8 +399,13 @@ kubectl get deploy approval -w -n books
 ## Liveness Probe 점검
 ```
 Approval 서비스의 deployment.yml 의 liveness 설정을 tcpSock:8081로 변경하여 확인  
-
+```
 ![image](https://user-images.githubusercontent.com/65577551/98315537-beaac300-201b-11eb-9e78-a6b54ad2688c.png)
+
+
+```
+Approval 서비스의 deployment.yml 의 liveness 설정을 tcpSock:8081로 변경하여 확인  
+```
 
 
 
